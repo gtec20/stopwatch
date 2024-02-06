@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>알바 급여 계산기</title>
+    <style>
+        body {
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+    
+        #Cal {
+            width: 80%;
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    
+        .calculator_setup {
+            list-style: none;
+            padding: 0;
+        }
+    
+        .calculator_setup li {
+            margin-bottom: 20px;
+        }
+    
+        .calculator_setup label {
+            display: inline-block;
+            width: 150px;
+            font-weight: bold;
+        }
+    
+        .calculator_setup input[type="number"] {
+            width: calc(100% - 160px);
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    
+        button:hover {
+            background-color: #0056b3;
+        }
+    
+        #totalPay {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+    
+</head>
+<body>
+    <div id="Cal">
+        <h2>급여계산기</h2>
+        <ul class="calculator_setup">
+            <li>
+                <label for="payOrigin">시급(원) : </label>
+                <input type="number" inputmode="numeric" pattern="[0-9]*" id="payOrigin" placeholder="시급을 입력하세요.">
+            </li>
+            <li>
+                <label for="perDay">일일 근무시간 : </label>
+                <input type="number" inputmode="numeric" pattern="[0-9]*" id="perDay" placeholder="근무시간을 입력하세요.">
+            </li>
+            <li>
+                <label for="perWeek">월 근무일수 : </label>
+                <input type="number" inputmode="numeric" pattern="[0-9]*" id="perMonth" placeholder="근무일수을 입력하세요.">
+            </li>
+        </ul>
+        <button onclick="calculatePay()">급여 계산하기</button>
+        <p id="totalPay"></p>
+    </div>
+
+    <script>
+        function calculatePay() {
+            var payOrigin = document.getElementById("payOrigin").value;
+            var perDay = document.getElementById("perDay").value;
+            var perMonth = document.getElementById("perMonth").value;
+            var totalPay = payOrigin * perDay * perMonth;
+            document.getElementById("totalPay").innerHTML = "예상 월급: " + totalPay.toLocaleString() + "원";
+        }
+    </script>
+</body>
+</html>

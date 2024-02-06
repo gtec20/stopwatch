@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>알바 급여 계산기</title>
+    <style>
+        body {
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+    
+        #Cal {
+            width: 80%;
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    
+        .calculator_setup {
+            list-style: none;
+            padding: 0;
+        }
+
+        .calculator_setup li 
+        .item_term {
+            position: relative;
+            display: inline-block;
+            vertical-align: top;
+            width: 150px;
+            height: 44px;
+            font-size: 15px;
+            line-height: 44px;
+            color: #4c515b;
+            font-weight: normal;
+        }
+
+        .calculator_setup li 
+        .item_description {
+            display: inline-block;
+            vertical-align: top;
+            width: calc(100% - 153px);
+        }
+
+        .calculator_setup 
+        .write-pay__input {
+            position: relative;
+        }
+
+        .calculator_setup
+        .write-pay__input 
+        .pay-until {
+            position: absolute;
+            top: 13px;
+            right: 100px;
+            line-height: 18px;
+            font-size: 15px;
+            color: #8f959f;
+            }
+
+        .calculator_setup 
+        .write-day__input {
+            position: relative;
+        }
+
+        .calculator_setup
+        .write-day__input 
+        .day-until {
+            position: absolute;
+            top: 13px;
+            right: 88px;
+            line-height: 18px;
+            font-size: 15px;
+            color: #8f959f;
+            }
+
+        .calculator_setup 
+        .write-month__input {
+            position: relative;
+        }
+
+        .calculator_setup
+        .write-month__input 
+        .month-until {
+            position: absolute;
+            top: 13px;
+            right: 100px;
+            line-height: 18px;
+            font-size: 15px;
+            color: #8f959f;
+            }
+
+        
+        .calculator_setup li {
+            margin-bottom: 20px;
+        }
+    
+        
+        .calculator_setup input[type="number"] {
+            width: calc(100% - 160px);
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    
+        button {
+            padding: 10px 20px;
+            background-color: #34d64a;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    
+        button:hover {
+            background-color: #009c15;
+        }
+    
+        #totalPay {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+    
+</head>
+<body>
+    <div id="Cal">
+        <h2>급여계산기</h2>
+        <ul class="calculator_setup">
+            <li>
+                <div id="payOrigin" class="item_term">시급</div>
+                <div class="item_description write-pay__input">
+                    <input type="number" inputmode="numeric" id="payOrigin" placeholder="시급을 입력하세요.">
+                    <span class="pay-until">원</span>
+                </div>
+            </li>
+            <li>
+                <div id="perDay" class="item_term">일일 근무시간 : </div>
+                <div class="item_description write-day__input">
+                    <input type="number" inputmode="numeric" id="perDay" placeholder="근무시간을 입력하세요.">
+                    <span class="day-until">시간</span>
+                </div>
+            </li>
+            <li>
+                <div id="perWeek" class="item_term">월 근무일수 : </div>
+                <div class="item_description write-month__input">
+                    <input type="number" inputmode="numeric" id="perMonth" placeholder="근무일수을 입력하세요.">
+                    <span class="month-until">일</span>
+                </div>                
+            </li>
+        </ul>
+        <button onclick="calculatePay()">급여 계산하기</button>
+        <p id="totalPay"></p>
+    </div>
+
+    <script>
+        function calculatePay() {
+            var payOrigin = document.getElementById("payOrigin").value;
+            var perDay = document.getElementById("perDay").value;
+            var perMonth = document.getElementById("perMonth").value;
+
+            var totalPay = payOrigin * perDay * perMonth;
+    
+            document.getElementById("totalPay").innerHTML = "예상 월급: " + totalPay.toLocaleString() + "원";
+        }
+    </script>
+    
+</body>
+</html>
