@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>타이머/알람</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+    }
+  </style>
+</head>
+<body>
+  <h2>시간 입력</h2>
+  <label>시간 : <input type="number" id="hours" min="0" step="1"  placeholder="시간" ></label>
+  <br><br>
+
+  <label>분 : <input type="number" id="min" min = "0" max="59" step="1" placeholder="분" ></label>
+  <br><br>
+
+  <label>초 : <input type="number" id="sec" min = "0" max="59" step="1" placeholder="초" ></label>
+  <br><br>
+
+  <h2 id="result"></h2>
+
+  <button onclick="timerSrt()">start</button>
+
+  <script>
+    //남은 시간
+    var remainTime;
+    function timerSrt(){
+      // 엘리먼트 가져오기
+      var hrsInput = document.getElementById('hours');
+      var minInput = document.getElementById('min');
+      var secInput = document.getElementById('sec');
+      var result = document.getElementById('result');
+
+      // 입력한 시간, 분, 초 남은 시간 설정
+      // 문자열의 숫자를 정수로 반환 parseInt / 10진수
+      // 입력 없을 때 기본 값 0
+      // 남은 시간 초로 변환
+      var hrs = parseInt(hrsInput.value, 10) || 0;
+      var min = parseInt(minInput.value, 10) || 0;
+      var sec = parseInt(secInput.value, 10) || 0;
+      remainTime = hrs * 3600 + min * 60 + sec;
+
+      // 타이머 시작
+      // Math.floor 정수부분만 남김
+      var timerInterval = setInterval(function (){
+        // 초로 변환된 시간을 -> 시간/분/초로 변환
+        var viewHrs = Math.floor(remainTime / 3600);
+        var viewMin = Math.floor((remainTime % 3600) / 60);
+        var viewsec = remainTime % 60;
+
+
+        //타이머를 00:00:00 처럼 표시되게 하기
+        result.textContent =
+          //문자열 길이 -> 2 / 빈 공간 '0'으로 채움
+          String(viewHrs).padStart(2, '0') + ":" +
+          String(viewMin).padStart(2, '0') + ":" +
+          String(viewsec).padStart(2, '0');
+
+        if (remainTime > 0) {
+          remainTime--;
+        }else {
+          alert('타이머 종료');
+          clearInterval(timerInterval);
+        }
+      }, 1000);
+
+
+
+    }
+  </script>
+</body>
+
+</html>
