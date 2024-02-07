@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer</title>
+    <style>
+        #timer_wrap {
+            text-align: center;
+            margin-top: 50px;
+        }
+        label {
+            display: inline-block;
+            margin: 0 10px;
+            position: relative;
+        }
+        input[type="text"] {
+            padding: 5px;
+            margin: 5px;
+            width: 50px;
+        }
+        .btn {
+            padding: 5px 10px;
+            margin: 5px;
+            border: none;
+            cursor: pointer;
+            border-radius: 20px; 
+        }
+        .start-btn {
+            background-color: rgb(38, 189, 0); 
+        }
+        .pause-btn, .resume-btn {
+            background-color: rgb(255, 235, 59); 
+        }
+        .reset-btn{
+            background-color: red;
+        }
+    </style>
+    <script>
+        // timer 선언
+        // startTimer 함수를 만듦, pauseTimer, resumeTimer, resetTimer까지
+        // startTimer 할때, 시분초를 전부 합쳐 초로 만들어준다. 
+        // setInterval을 사용해 1000미리초 1초마다 실행되는 timer 만듦
+        // 일시중지에 사용할 isPaused도 선언해야하는데 이건 불린을 쓴다
+        // isPaused = false 일때 동작 중인것 true일떄 멈춤 
+        
+        var timer;
+        var isPaused = false;
+
+        function startTimer(){
+            var startHrs = parseInt(document.getElementById("startHrs").value) || 0;
+            var startMin = parseInt(document.getElementById("startMin").value) || 0;
+            var startSec = parseInt(document.getElementById("startSec").value) || 0;
+            var totalSeconds = startHrs * 3600 + startMin * 60 + startSec;
+
+            var display = document.getElementById("display");
+
+            timer = setInterval(function(){
+                if (!isPaused) { 
+                    var hours = Math.floor(totalSeconds / 3600);
+                    var minutes = Math.floor((totalSeconds % 3600) / 60);
+                    var seconds = totalSeconds % 60;
+
+                    display.innerHTML = hours + "시간" + minutes + "분" + seconds + "초" ;
+                    
+                    if(totalSeconds <=0) {
+                        clearInterval(timer);
+                        display.innerHTML = "타이머 종료";
+                    }
+                        totalSeconds--;
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            isPaused = True;
+        }
+
+        function resumeTimer() {
+            isPaused = false;
+        }
+
+        function resetTimer() {
+            clearInterval(timer);
+            document.getElementById("startHrs").value = "";
+            document.getElementById("startMin").value = "";
+            document.getElementById("startSec").value = "";
+            document.getElementById("display").innerHTML = "";
+            isPaused = false;
+        }
+    </script>
+</head>
+<body>
+    <div id="timer_wrap">
+        <form>
+            <!--라벨로 시 분 초 표시 input 으로 칸만들어줌 startHrs, startMin, startSec-->
+            <!--start, pause, resume, reset 버튼만들기-->
+            <!--실행값 보여주기-->
+            <label><input type="text" id="startHrs" />시</label>
+            <label><input type="text" id="startMin" />분</label>
+            <label><input type="text" id="startSec" />초</label>
+            <input type="button" value="START" class="btn start-btn" onclick="startTimer()" />
+            <input type="button" value="PAUSE" class="btn pause-btn" onclick="pauseTimer()" />
+            <input type="button" value="RESUME" class="btn resume-btn" onclick="resumeTimer()"/> 
+            <input type="button" value="RESET" class="btn reset-btn" onclick="resetTimer()"/>
+        </form>
+        <hr />
+        <div id="display"></div>
+    </div>
+</body>
+</html>
