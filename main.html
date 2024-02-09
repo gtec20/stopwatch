@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>승우의 스톱워치</title>
+</head>
+<body>
+    <div id="stopwatch">00:00:00</div>
+    <div style="display: flex;">
+        <button id="startAndStopBtn" onclick="Stopwatch()">시작</button>
+        <button onclick="resetStopwatch();">초기화</button>
+    </div>
+</body>
+<script>
+    let time = 0;
+    let stopwatch = null;
+    let isStart = false;
+    
+    function Stopwatch() {
+        let btn = document.getElementById('startAndStopBtn');
+        if(!isStart) {
+            btn.innerHTML = '정지';
+            startStopwatch();
+        } else {
+            btn.innerHTML = '시작';
+            stopStopwatch();
+        }
+
+        isStart = !isStart;
+    }
+
+    function startStopwatch() {
+        if(isStart) {
+            return;
+        }
+        stopwatch = setInterval(function() {
+            time++;
+            calculatorStopwatch();
+        }, 1000);
+    }
+
+    function stopStopwatch() {
+        clearInterval(stopwatch);
+    }
+
+    function resetStopwatch() {
+        if(isStart) {
+            alert('스톱워치를 종료 후 초기화를 진행해주세요.')
+            return;
+        }
+        stopStopwatch();
+        time = 0;
+        calculatorStopwatch();
+    }
+
+    function calculatorStopwatch() {
+        let hour = Math.floor(time / 3600);
+        let min = Math.floor((time - hour * 3600) / 60);
+        let sec = (time - hour * 3600 - min * 60);
+        hour = hour < 10 ? '0' + hour : hour;
+        min = min < 10 ? '0' + min : min;
+        sec = sec < 10 ? '0' + sec : sec;
+        document.getElementById('stopwatch').innerHTML = hour + ":" + min + ":" + sec;
+    }
+</script>
+</html>
